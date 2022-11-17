@@ -1,0 +1,92 @@
+pipeline {
+    agent {label 'maven'}
+    
+environment {
+        registry = "saharr/dockertpachat-pipeline"
+        registryCredential = "dockerhub"
+        dockerImage = ''
+    }
+    stages {
+            stage('Git Checkout ') {
+                  steps {
+                   git branch: 'main', credentialsId: 'gitaccess', url: 'https://github.com/sahar-gharrad/tpAchat.git'
+           
+                  }
+            }
+            
+                     stage('run application ') {
+                   steps {
+                   
+                      sh ' sudo docker compose up -d '
+                    }
+            }
+                  stage('Maven Clean ') {
+                   steps {
+                        sh 'mvn clean '
+                    }
+            }
+            stage('JUnit Test ') {
+                   steps {
+                        sh 'mvn test -Ptest'
+                    }
+            }
+             stage('MVN COMPILE')
+                {
+                    steps {
+                         sh 'mvn compile -Ptest'
+                         }
+                 }
+       
+                   stage('MVN SONARQUBE')
+                 {
+                 steps{
+                          sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sahar -Ptest'
+                      }
+                 }
+            stage('Build Package ') {
+                   steps {
+                        sh 'mvn clean install'
+                    }
+            }
+            stage('Build Image Docker') {
+                   steps {
+                      sh 'sudo docker build -t devimage .'
+                    }
+            }
+                 stage('MVN deploy jar ')
+              {
+                steps
+                {
+                    sh 'mvn clean deploy '
+                    }
+                }
+                /*
+                     stage('docker deploy image ')
+              {
+                steps
+                {
+                    sh 'mvn clean deploy '
+                    }
+                }*/
+                
+                
+                stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy our image') {
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+                
+                
+    }
+}
