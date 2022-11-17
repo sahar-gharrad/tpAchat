@@ -15,7 +15,7 @@ services:
   tpachatimage:
     depends_on:
       - mysqldb
-      image: 'saharr/dockertpachat-pipeline:16' 
+      
     build:
       context: "./"
       dockerfile: "Dockerfile"
