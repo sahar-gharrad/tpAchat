@@ -42,74 +42,76 @@ import java.util.stream.Stream;
 @SpringBootTest
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-public class SecteurActiviteServiceImplMock {
+public class SecteurActivityServiceTestMock {
 
-	@Autowired
-	SecteurActiviteServiceImpl secteurActiviteServiceImpl;
-	@MockBean
-	SecteurActiviteRepository secteurActiviteRepository;
+    @Autowired
+    SecteurActiviteServiceImpl secteurActiviteServiceImpl;
+    @MockBean
+    SecteurActiviteRepository secteurActiviteRepository;
 
-	@Test
-	@Order(1)
-	public void saveSecteurActiviteTest() {
-		SecteurActivite sec = new SecteurActivite("sec1", "categorie 1");
-		Mockito.when(secteurActiviteRepository.save(sec)).thenReturn(sec);
-		assertEquals(sec, secteurActiviteServiceImpl.addSecteurActivite(sec));
-		log.info("Secteur Activity ajouter avec success");
-	}
-	
-	@Test
-	@Order(2)
-	public void updateSecteurActiviteTest() {
-		SecteurActivite sec = new SecteurActivite("sec2", "categorie 2");
-		Mockito.when(secteurActiviteRepository.save(sec)).thenReturn(sec);
-		assertEquals(sec, secteurActiviteServiceImpl.addSecteurActivite(sec));
-		log.info("secteurActivite ajouter avec success");
-		sec.setCodeSecteurActivite("sec5");
-		sec.setLibelleSecteurActivite("categorie 5");
-		Mockito.when(secteurActiviteRepository.save(sec)).thenReturn(sec);
-		assertEquals(sec, secteurActiviteServiceImpl.updateSecteurActivite(sec));
-		log.info("secteurActivite mdofier avec success");
-	}
-	
-	@Test
-	@Order(3)
-	public void getAllSecteurActiviteTest() {
-		Mockito.when(secteurActiviteRepository.findAll()).thenReturn(Stream
-				.of(new SecteurActivite("sec2", "categorie 2"), new SecteurActivite("sec3", "categorie 3")).collect(Collectors.toList()));
-		assertEquals(2, secteurActiviteServiceImpl.retrieveAllSecteurActivite().size());
-		List<SecteurActivite> listSecteurActivite = secteurActiviteServiceImpl.retrieveAllSecteurActivite();
-		log.info("==>size:"+listSecteurActivite.size());
-		for(int i=0;i<listSecteurActivite.size();i++){
-			log.info("==>"+listSecteurActivite.get(i).getLibelleSecteurActivite());
-		}
-	}
+    @Test
+    @Order(1)
+    public void saveSecteurActiviteTest() {
+        SecteurActivite sec = new SecteurActivite("sec1", "categorie 1");
+        Mockito.when(secteurActiviteRepository.save(sec)).thenReturn(sec);
+        assertEquals(sec, secteurActiviteServiceImpl.addSecteurActivite(sec));
+        log.info("Secteur Activity ajouter avec success");
+    }
 
-	@Test
-	@Order(4)
-	public void deleteSecteurActiviteTest() {
-		SecteurActivite sec = new SecteurActivite("sec4", "categorie 4");
-		assertNotNull(sec.getCodeSecteurActivite());
-		assertNotNull(sec.getLibelleSecteurActivite());
-		secteurActiviteServiceImpl.deleteSecteurActivite(sec.getIdSecteurActivite());
-		verify(secteurActiviteRepository, times(1)).deleteById(sec.getIdSecteurActivite());
-		log.info("secteurActivite supprimer avec success");
-	}
-	
-	@Test
-	@Order(5)
-	public void deleteAllSecteurActiviteTest() {
-		Mockito.when(secteurActiviteRepository.findAll()).thenReturn(Stream
-				.of(new SecteurActivite("sec2", "categorie 2"), new SecteurActivite("sec3", "categorie 3")).collect(Collectors.toList()));
-		assertEquals(2, secteurActiviteServiceImpl.retrieveAllSecteurActivite().size());
-		List<SecteurActivite> listSecteurActivite = secteurActiviteServiceImpl.retrieveAllSecteurActivite();
-		log.info("==>size:"+listSecteurActivite.size());
-		for(int i=0;i<listSecteurActivite.size();i++){
-			secteurActiviteServiceImpl.deleteSecteurActivite(listSecteurActivite.get(i).getIdSecteurActivite());;
-			log.info("==> secteurActivite "+listSecteurActivite.get(i).getLibelleSecteurActivite()+" deleted successfulyy ");
-		}
-	}
+    @Test
+    @Order(2)
+    public void updateSecteurActiviteTest() {
+        SecteurActivite sec = new SecteurActivite("sec2", "categorie 2");
+        Mockito.when(secteurActiviteRepository.save(sec)).thenReturn(sec);
+        assertEquals(sec, secteurActiviteServiceImpl.addSecteurActivite(sec));
+        log.info("secteurActivite ajouter avec success");
+        sec.setCodeSecteurActivite("sec5");
+        sec.setLibelleSecteurActivite("categorie 5");
+        Mockito.when(secteurActiviteRepository.save(sec)).thenReturn(sec);
+        assertEquals(sec, secteurActiviteServiceImpl.updateSecteurActivite(sec));
+        log.info("secteurActivite mdofier avec success");
+    }
+
+    @Test
+    @Order(3)
+    public void getAllSecteurActiviteTest() {
+        Mockito.when(secteurActiviteRepository.findAll()).thenReturn(Stream
+                .of(new SecteurActivite("sec2", "categorie 2"), new SecteurActivite("sec3", "categorie 3")).collect(Collectors.toList()));
+        assertEquals(2, secteurActiviteServiceImpl.retrieveAllSecteurActivite().size());
+        List<SecteurActivite> listSecteurActivite = secteurActiviteServiceImpl.retrieveAllSecteurActivite();
+        log.info("==>size:"+listSecteurActivite.size());
+        for(int i=0;i<listSecteurActivite.size();i++){
+            log.info("==>"+listSecteurActivite.get(i).getLibelleSecteurActivite());
+        }
+    }
+
+    @Test
+    @Order(4)
+    public void deleteSecteurActiviteTest() {
+        SecteurActivite sec = new SecteurActivite("sec4", "categorie 4");
+        assertNotNull(sec.getCodeSecteurActivite());
+        assertNotNull(sec.getLibelleSecteurActivite());
+        secteurActiviteServiceImpl.deleteSecteurActivite(sec.getIdSecteurActivite());
+        verify(secteurActiviteRepository, times(1)).deleteById(sec.getIdSecteurActivite());
+        log.info("secteurActivite supprimer avec success");
+    }
+
+    @Test
+    @Order(5)
+    public void deleteAllSecteurActiviteTest() {
+        Mockito.when(secteurActiviteRepository.findAll()).thenReturn(Stream
+                .of(new SecteurActivite("sec2", "categorie 2"), new SecteurActivite("sec3", "categorie 3")).collect(Collectors.toList()));
+        assertEquals(2, secteurActiviteServiceImpl.retrieveAllSecteurActivite().size());
+        List<SecteurActivite> listSecteurActivite = secteurActiviteServiceImpl.retrieveAllSecteurActivite();
+        log.info("==>size:"+listSecteurActivite.size());
+        for(int i=0;i<listSecteurActivite.size();i++){
+            secteurActiviteServiceImpl.deleteSecteurActivite(listSecteurActivite.get(i).getIdSecteurActivite());;
+            log.info("==> secteurActivite "+listSecteurActivite.get(i).getLibelleSecteurActivite()+" deleted successfulyy ");
+        }
+    }
 }
+
+
 
 
 
