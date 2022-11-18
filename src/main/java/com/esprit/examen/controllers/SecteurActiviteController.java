@@ -36,9 +36,12 @@ public class SecteurActiviteController {
 	// http://localhost:8089/SpringMVC/secteurActivite/add-secteurActivite
 	@PostMapping("/add-secteurActivite")
 	@ResponseBody
-	public SecteurActivite addSecteurActivite(@RequestBody SecteurActivite sa) {
-		SecteurActivite secteurActivite = secteurActiviteService.addSecteurActivite(sa);
-		return secteurActivite;
+	public SecteurActivite addSecteurActivite(@RequestBody SecteurActiviteCategorieSaharModel secteurActiviteCategorieSaharModel) {
+		SecteurActivite sec = new SecteurActivite();
+		sec.setCodeSecteurActivite(secteurActiviteCategorieSaharModel.getCodeSecteurActivite());
+		sec.setLibelleSecteurActivite(secteurActiviteCategorieSaharModel.getLibelleSecteurActivite());
+		secteurActiviteService.addSecteurActivite(sec);
+		return secteurActiviteService.addSecteurActivite(sec);
 	}
 
 	// http://localhost:8089/SpringMVC/secteurActivite/remove-secteurActivite/{secteurActivite-id}
@@ -56,4 +59,22 @@ public class SecteurActiviteController {
 	}
 
 	
+}
+
+
+@Getter
+@Setter
+class SecteurActiviteCategorieSaharModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idSecteurActivite;
+	private String codeSecteurActivite;
+	private String libelleSecteurActivite;
+	@ManyToMany(mappedBy="secteurActivites")
+	@JsonIgnore
+	private Set<Fournisseur> fournisseurs;
 }
