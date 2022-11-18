@@ -1,14 +1,11 @@
 package com.esprit.examen.services;
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.esprit.examen.entities.SecteurActivite;
-import com.esprit.examen.repositories.SecteurActiviteRepository;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -18,7 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.esprit.examen.entities.CategorieProduit;
 import com.esprit.examen.entities.Produit;
+import com.esprit.examen.entities.SecteurActivite;
 import com.esprit.examen.repositories.CategorieProduitRepository;
+import com.esprit.examen.repositories.SecteurActiviteRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,14 +42,14 @@ import java.util.stream.Stream;
 @SpringBootTest
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-public class SecteurActivityServiceTestMock {
+public class SecteurActiviteServiceImplMock {
 
-  @Autowired
-     SecteurActiviteServiceImpl secteurActiviteService;
-  @MockBean
-    SecteurActiviteRepository secteurActiviteRepository;
+	@Autowired
+	SecteurActiviteServiceImpl secteurActiviteServiceImpl;
+	@MockBean
+	SecteurActiviteRepository secteurActiviteRepository;
 
-@Test
+	@Test
 	@Order(1)
 	public void saveSecteurActiviteTest() {
 		SecteurActivite sec = new SecteurActivite("sec1", "categorie 1");
@@ -111,7 +110,6 @@ public class SecteurActivityServiceTestMock {
 		}
 	}
 }
-
 
 
 
