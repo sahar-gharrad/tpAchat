@@ -1,13 +1,26 @@
 package com.esprit.examen.controllers;
 
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.esprit.examen.entities.Fournisseur;
+import com.esprit.examen.entities.Produit;
 import com.esprit.examen.entities.SecteurActivite;
 import com.esprit.examen.services.ISecteurActiviteService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
+import lombok.Getter;
+import lombok.Setter;
 
 @RestController
 @Api(tags = "Gestion des secteurs activites")
