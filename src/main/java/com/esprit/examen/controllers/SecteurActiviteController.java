@@ -54,8 +54,9 @@ public class SecteurActiviteController {
 	// http://localhost:8089/SpringMVC/secteurActivite/modify-secteurActivite
 	@PutMapping("/modify-secteurActivite")
 	@ResponseBody
-	public SecteurActivite modifySecteurActivite(@RequestBody SecteurActivite secteurActivite) {
-		return secteurActiviteService.updateSecteurActivite(secteurActivite);
+	public SecteurActivite modifySecteurActivite(@RequestBody  SecteurActiviteCategorieSaharModel secteurActiviteCategorieSaharModel) {
+		return secteurActiviteService.updateSecteurActivite(new SecteurActivite(secteurActiviteCategorieSaharModel.getIdSecteurActivite(),
+				secteurActiviteCategorieSaharModel.getCodeSecteurActivite(), secteurActiviteCategorieSaharModel.getLibelleSecteurActivite(), secteurActiviteCategorieSaharModel.getFournisseurs()));
 	}
 
 	
